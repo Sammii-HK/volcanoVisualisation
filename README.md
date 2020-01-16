@@ -4,7 +4,7 @@
 
 
 
-#### [Dexter](https://github.com/Dextorr/dextorr.github.io) is awesome
+#### [Dexter](https://github.com/Dextorr/) is awesome
 
 
 
