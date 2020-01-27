@@ -1,9 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
   console.log('JS loaded')
 
-  d3.csv("/data/significantvolcanoeruptions.csv", function(data) {
+  d3.csv("/data/food.csv", function(data) {
 				console.log(data);
 			});
+  // d3.csv("/data/significantvolcanoeruptions.csv", function(data) {
+	// 			console.log(data);
+	// 		});
   // d3.csv("/data/chronounits.csv", function(data) {
 	// 			console.log(data);
 	// 		});
