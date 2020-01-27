@@ -2,14 +2,27 @@ document.addEventListener('DOMContentLoaded', () => {
   console.log('JS loaded')
 
   d3.csv("/data/food.csv", function(data) {
-				console.log(data);
+				console.log('food', data);
 			});
-  // d3.csv("/data/significantvolcanoeruptions.csv", function(data) {
-	// 			console.log(data);
-	// 		});
+  d3.json("/data/data.json", function(data) {
+				console.log('json', data);
+			});
+
   // d3.csv("/data/chronounits.csv", function(data) {
 	// 			console.log(data);
 	// 		});
+
+  const body = d3.select("body")
+  const p = body.append("p")
+  p.text("Hello world!")
+
+  var dataset = [ 5, 10, 15, 20, 25 ];
+
+			d3.select("body").selectAll("p")
+				.data(dataset)
+				.enter()
+				.append("p")
+				.text(function(d) { return d; });
 })
 
 // $(function() {
