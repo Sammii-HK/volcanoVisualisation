@@ -1,15 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
   console.log('JS loaded')
 
-  d3.csv("/data/food.csv", function(data) {
-				console.log('food', data);
-			});
-  d3.json("/data/data.json", function(data) {
-				console.log('json', data);
-			});
+  // d3.csv("/data/food.csv", function(data) {
+	// 			console.log('food', data);
+	// 		});
+  // d3.json("/data/data.json", function(data) {
+	// 			console.log('json', data);
+	// 		});
 
   // d3.csv("/data/chronounits.csv", function(data) {
 	// 			console.log(data);
+	// 		});
+  d3.csv("/data/significantvolcanoeruptions.csv", function(data) {
+				console.log('volcanos', data);
+			});
+  // d3.csv("/data/Mag6PlusEarthquakes_1900-2013.csv", function(data) {
+	// 			console.log('mag 6', data);
 	// 		});
 
   const body = d3.select("body")
