@@ -16,6 +16,16 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
 
 
+	// //Create scale functions
+	// var xScale = d3.scaleLinear()
+	// 					 .domain([0, d3.max(dataset, function(d) { return d[0]; })])
+	// 					 .range([0, w]);
+  //
+	// var yScale = d3.scaleLinear()
+	// 					 .domain([0, d3.max(dataset, function(d) { return d[1]; })])
+	// 					 .range([0, h]);
+
+
 	//Create SVG element
 	var svg = d3.select("body")
 				.append("svg")
@@ -36,6 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			   		return Math.sqrt(h - d[1]);
 			   });
 
+     // Create labels
      svg.selectAll("text")
   			   .data(dataset)
   			   .enter()
