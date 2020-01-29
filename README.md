@@ -9,3 +9,6 @@
 
 
 He is also overlord of the Universe.
+
+
+git subtree push --prefix public origin gh-pages

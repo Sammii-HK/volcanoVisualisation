@@ -1,6 +1,7 @@
 let dataset
 let w = 1000
 let h = 500
+const padding = 20
 
 let nodes = [] // To push extracted data from dataset to
 
@@ -57,13 +58,18 @@ let visualiseData = () => {
 	//Create scale functions
 	var xScale = d3.scale
               .linear()
-              .domain([-180, 180])
-              .range([0, w])
+              .domain([-90, 90])
+              .range([padding, w - padding * 2])
 
 	var yScale = d3.scale
               .linear()
-              .domain([-90, 90])
-              .range([0, h])
+              .domain([-180, 180])
+              .range([h - padding, padding])
+
+  var rScale = d3.scale
+              .linear()
+              .domain([0, 10])
+              .range([0, 10]);
   //
 	// var yScale = d3.scaleLinear()
 	// 					 .domain([0, d3.max(dataset, function(d) { return d.long })])
@@ -77,8 +83,8 @@ let visualiseData = () => {
     node.lat = val['Latitude']
     node.long = val['Longitude']
     if ('' == node.type) node.type = 'Type N/A'
-    node.radius = val['Volcano Explosivity Index (VEI)']
-    nodes.push(node)
+    node.vei = val['Volcano Explosivity Index (VEI)']
+    if (node.vei) nodes.push(node)
     if (labels.indexOf(node.type) == -1) labels.push(node.type)
   })
   console.log("nodes:", nodes)
@@ -102,16 +108,16 @@ let visualiseData = () => {
      .enter()
      .append("circle")
      .attr("cx", function(d) {
-        if (d.lat) return xScale(parseInt(d.lat))
+        if (d.long) return xScale(parseInt(d.long))
      })
      .attr("cy", function(d) {
-        if (d.long) return yScale(parseInt(d.long))
+        if (d.lat) return yScale(parseInt(d.lat))
      })
      // .attr("r", function(d) {
      //        return 10
      //     })
      .attr("r", function(d) {
-     		return Math.sqrt(h - d.radius)
+     		if (d.vei) return rScale(parseInt(d.vei))
      })
      .attr("class", function(d) {
        return "data-circle"
