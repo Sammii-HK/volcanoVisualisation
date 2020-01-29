@@ -1,6 +1,6 @@
 let dataset
-let w = 500
-let h = 100
+let w = 1000
+let h = 500
 
 let nodes = [] // To push extracted data from dataset to
 
@@ -49,18 +49,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
 let visualiseData = () => {
 
-  var linearScale = d3.scaleLinear()
-    .domain([0, 10])
-    .range([0, 600]);
+  // var linearScale = d3.scale
+  //   .linear()
+  //   .domain([0, 10])
+  //   .range([0, 600]);
 
 	//Create scale functions
-	var xScale = d3.scaleLinear()
-						 .domain([-180, 180])
-						 .range([0, w])
+	var xScale = d3.scale
+              .linear()
+              .domain([-180, 180])
+              .range([0, w])
 
-	var yScale = d3.scaleLinear()
-						 .domain([-90, 90])
-						 .range([0, h])
+	var yScale = d3.scale
+              .linear()
+              .domain([-90, 90])
+              .range([0, h])
   //
 	// var yScale = d3.scaleLinear()
 	// 					 .domain([0, d3.max(dataset, function(d) { return d.long })])
@@ -99,10 +102,10 @@ let visualiseData = () => {
      .enter()
      .append("circle")
      .attr("cx", function(d) {
-        return parseInt(d.lat)
+        if (d.lat) return xScale(parseInt(d.lat))
      })
      .attr("cy", function(d) {
-        return parseInt(d.long)
+        if (d.long) return yScale(parseInt(d.long))
      })
      // .attr("r", function(d) {
      //        return 10
