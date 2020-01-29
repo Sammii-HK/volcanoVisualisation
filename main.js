@@ -1,19 +1,27 @@
+let dataset
+
 document.addEventListener('DOMContentLoaded', () => {
   console.log('JS loaded')
 
 
   d3.csv("/data/significantvolcanoeruptions.csv", function(data) {
-				console.log('volcanos', data)
+      dataset = data
+				console.log('dataset', dataset)
+				console.log('volcanos', data[601].Latitude, ':', data[601].Longitude)
+				console.log('volcanos', typeof data[601].Longitude)
+				console.log('volcanos', typeof parseInt(data[601].Longitude))
+        visualiseData()
 			})
+
 
   //Width and height
   var w = 500;
   var h = 100;
 
-  var dataset = [
-    [5, 20], [480, 90], [250, 50], [100, 33], [330, 95],
-    [410, 12], [475, 44], [25, 67], [85, 21], [220, 88]
-  ];
+  // var dataset = [
+  //   [5, 20], [480, 90], [250, 50], [100, 33], [330, 95],
+  //   [410, 12], [475, 44], [25, 67], [85, 21], [220, 88]
+  // ];
 
 
 	// //Create scale functions
@@ -32,37 +40,43 @@ document.addEventListener('DOMContentLoaded', () => {
 				.attr("width", w)
 				.attr("height", h);
 
-	svg.selectAll("circle")
-	   .data(dataset)
-	   .enter()
-	   .append("circle")
-	   .attr("cx", function(d) {
-	   		return d[0];
-	   })
-	   .attr("cy", function(d) {
-	   		return d[1];
-	   })
+let visualiseData = () => {
+  // Create circles
+  svg.selectAll("circle")
+     .data(dataset)
+     .enter()
+     .append("circle")
+     .attr("cx", function(d) {
+        return parseInt(d.Latitude);
+     })
+     .attr("cy", function(d) {
+        return parseInt(d.Longitude);
+     })
      .attr("r", function(d) {
-			   		return Math.sqrt(h - d[1]);
-			   });
+            return 10;
+         });
+     // .attr("r", function(d) {
+      //    		return Math.sqrt(h - d[1]);
+      //    });
 
-     // Create labels
-     svg.selectAll("text")
-  			   .data(dataset)
-  			   .enter()
-  			   .append("text")
-  			   .text(function(d) {
-  			   		return d[0] + "," + d[1];
-  			   })
-  			   .attr("x", function(d) {
-  			   		return d[0];
-  			   })
-  			   .attr("y", function(d) {
-  			   		return d[1];
-  			   })
-  			   .attr("font-family", "sans-serif")
-  			   .attr("font-size", "11px")
-  			   .attr("fill", "red");
+     // // Create labels
+     // svg.selectAll("text")
+      // 	   .data(dataset)
+      // 	   .enter()
+      // 	   .append("text")
+      // 	   .text(function(d) {
+      // 	   		return d[0] + "," + d[1];
+      // 	   })
+      // 	   .attr("x", function(d) {
+      // 	   		return d[0];
+      // 	   })
+      // 	   .attr("y", function(d) {
+      // 	   		return d[1];
+      // 	   })
+      // 	   .attr("font-family", "sans-serif")
+      // 	   .attr("font-size", "11px")
+      // 	   .attr("fill", "red");
+}
 
 
 
