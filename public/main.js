@@ -17,13 +17,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   d3.csv("/data/significantvolcanoeruptions.csv", function(data) {
-      dataset = data
-				console.log('dataset', dataset)
-				console.log('volcanos', data[601].Latitude, ':', data[601].Longitude)
-				console.log('volcanos', typeof data[601].Longitude)
-				console.log('volcanos', typeof parseInt(data[601].Longitude))
-        visualiseData()
-			})
+    dataset = data
+		console.log('dataset', dataset)
+		console.log('volcanos', data[601].Latitude, ':', data[601].Longitude)
+    visualiseData()
+	})
 
 
 	// //Create scale functions
@@ -35,11 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	// 					 .domain([0, d3.max(dataset, function(d) { return d[1]; })])
 	// 					 .range([0, h]);
 
-  //Create SVG element
-  var svg = d3.select("body")
-  .append("svg")
-  .attr("width", w)
-  .attr("height", h);
 
   // // set up animation and apply some gravity rules
   // var force = d3.layout.force()
@@ -62,24 +55,55 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 let visualiseData = () => {
+
   // Extract from dataset
   dataset.forEach((val, i, array) => {
     let node = {}
     node.date = new Date(val['Year'], 1, 1, 0, 0, 0, 0);
     node.type = val['Type'];
+    node.lat = val['Latitude'];
+    node.long = val['Longitude'];
     if ('' == node.type) node.type = 'Type N/A';
     node.amount = val['Volcano Explosivity Index (VEI)'];
     node.radius = node.amount * 2;
     nodes.push(node);
     if (labels.indexOf(node.type) == -1) labels.push(node.type);
   })
-  // sort nodes by date
+  console.log("nodes:", nodes)
+  // Sort nodes by date
   nodes.sort(function(a, b) {return a.date - b.date;});
 
-  // applies new properties to circles
+  //Create SVG element
+  var svg = d3.select("body")
+  .append("svg")
+  .attr("width", w)
+  .attr("height", h);
+
+  // // Apply new properties to circles
+  // svg.selectAll(".data-circle")
+  // .attr("cx", function(d) { return d.lat; })
+  // .attr("cy", function(d) { return d.long; });
+
+  // Create circles
   svg.selectAll(".data-circle")
-  .attr("cx", function(d) { return d.x; })
-  .attr("cy", function(d) { return d.y; });
+     .data(nodes)
+     .enter()
+     .append("circle")
+     .attr("cx", function(d) {
+        return parseInt(d.lat);
+     })
+     .attr("cy", function(d) {
+        return parseInt(d.long);
+     })
+     // .attr("r", function(d) {
+     //        return 10;
+     //     });
+     .attr("r", function(d) {
+     		return Math.sqrt(h - d.radius);
+     })
+     .attr("class", function(d) {
+       return "data-circle";
+     })
 }
 
 
@@ -112,47 +136,47 @@ let visualiseData = () => {
   //     return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
   //   };
   // }
-
-let addCircles = () => {
-  // trickle nodes in. tweak throttleNum vars to alter timing
-  let adds = nodes.slice(throttleIndex, throttleIndex += throttleNum)
-
-  throttledNodes = throttledNodes.concat(adds);
-
-  // Create circles
-  svg.selectAll(".data-circle")
-     .data(nodes)
-     .enter()
-     .append("circle")
-     // .attr("cx", function(d) {
-     //    return parseInt(d.Latitude);
-     // })
-     // .attr("cy", function(d) {
-     //    return parseInt(d.Longitude);
-     // })
-     // .attr("r", function(d) {
-     //        return 10;
-     //     });
-     .attr("r", function(d) {
-     		return Math.sqrt(h - d.radius);
-     })
-     .attr("class", function(d) {
-       return "data-circle";
-     })
-
-
-     // if (throttledNodes.length >= nodes.length) {
-     //    clearInterval(timer);
-     //  }
-     //
-     //  force.nodes(throttledNodes);
-     //
-     //  force.start();
-
-
-}
+//
+// let addCircles = () => {
+//   // trickle nodes in. tweak throttleNum vars to alter timing
+//   let adds = nodes.slice(throttleIndex, throttleIndex += throttleNum)
+//
+//   throttledNodes = throttledNodes.concat(adds);
+//
+//   // Create circles
+//   svg.selectAll(".data-circle")
+//      .data(nodes)
+//      .enter()
+//      .append("circle")
+//      // .attr("cx", function(d) {
+//      //    return parseInt(d.Latitude);
+//      // })
+//      // .attr("cy", function(d) {
+//      //    return parseInt(d.Longitude);
+//      // })
+//      // .attr("r", function(d) {
+//      //        return 10;
+//      //     });
+//      .attr("r", function(d) {
+//      		return Math.sqrt(h - d.radius);
+//      })
+//      .attr("class", function(d) {
+//        return "data-circle";
+//      })
+//
+//
+//      // if (throttledNodes.length >= nodes.length) {
+//      //    clearInterval(timer);
+//      //  }
+//      //
+//      //  force.nodes(throttledNodes);
+//      //
+//      //  force.start();
+//
+//
+// }
 
 // start adding circles
-  timer = setInterval(addCircles, 100);
+  // timer = setInterval(addCircles, 100);
 
 })
