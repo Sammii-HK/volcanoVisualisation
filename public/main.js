@@ -58,12 +58,12 @@ let visualiseData = () => {
 	//Create scale functions
 	var xScale = d3.scale
               .linear()
-              .domain([-90, 90])
+              .domain([-180, 180])
               .range([padding, w - padding * 2])
 
 	var yScale = d3.scale
               .linear()
-              .domain([-180, 180])
+              .domain([-90, 90])
               .range([h - padding, padding])
 
   var rScale = d3.scale
@@ -117,7 +117,7 @@ let visualiseData = () => {
      //        return 10
      //     })
      .attr("r", function(d) {
-     		if (d.vei) return rScale(parseInt(d.vei))
+     		return rScale(parseInt(d.vei))
      })
      .attr("class", function(d) {
        return "data-circle"
