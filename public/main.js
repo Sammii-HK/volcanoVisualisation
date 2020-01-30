@@ -78,6 +78,7 @@ let visualiseData = () => {
   // Extract from dataset
   dataset.forEach((val, i, array) => {
     let node = {}
+    node.name = val['Name']
     node.date = new Date(val['Year'], 1, 1, 0, 0, 0, 0)
     node.type = val['Type']
     node.lat = val['Latitude']
@@ -122,7 +123,16 @@ let visualiseData = () => {
      .attr("class", function(d) {
        return "data-circle"
      })
-}
+  }
+
+  svg.selectAll("text")
+    .data(nodes)
+    .enter()
+    .on("hover", function() {
+
+    })
+
+
 
 
 
