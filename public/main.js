@@ -25,7 +25,36 @@ document.addEventListener('DOMContentLoaded', () => {
     visualiseData()
 	})
 
+  d3.json('/data/world.json', function(err, json) {
+  //Bind data and create one path per GeoJSON feature
+  svg.selectAll("path")
+     .data(json.features)
+     .enter()
+     .append("path")
+     .attr("d", path)
+     .attr("z-index", -1)
+     .style("fill", "steelblue")
+})
 
+var projection = d3.geoEquirectangular()
+                      // .scale(100)
+                      // .center([0, 0])
+                      // .translate([0, 0])
+                      // .fitSize([w, h], geojson)
+                      // .fitExtent([[0, 0], [w, h]], geojson)
+                      .translate([w/2, h/2])
+                      // .scale([200])
+
+  //Define path generator, using the Albers USA projection
+	var path = d3.geoPath()
+    			 		 .projection(projection)
+
+
+	//Create SVG element
+	var svg = d3.select("body")
+    					.append("svg")
+    					.attr("width", w)
+    					.attr("height", h)
 
 
   // // set up animation and apply some gravity rules
@@ -92,11 +121,11 @@ let visualiseData = () => {
   // Sort nodes by date
   nodes.sort(function(a, b) {return a.date - b.date})
 
-  //Create SVG element
-  var svg = d3.select("body")
-  .append("svg")
-  .attr("width", w)
-  .attr("height", h)
+  // //Create SVG element
+  // var svg = d3.select("body")
+  // .append("svg")
+  // .attr("width", w)
+  // .attr("height", h)
 
   // // Apply new properties to circles
   // svg.selectAll(".data-circle")
