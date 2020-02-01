@@ -152,13 +152,13 @@ let visualiseData = () => {
      .attr("class", function(d) {
        return "data-circle"
      })
-  .on("mouseover", function(d) {
+     .on("mouseover", function(d) {
 
        //Get this bar's x/y values, then augment for the tooltip
        // var xPosition = parseFloat(d3.select(this).attr("x")) + xScale.bandwidth() / 2;
        // var yPosition = parseFloat(d3.select(this).attr("y")) + 14;
 
-       console.log(d.name);
+       console.log(d.name, d.vei);
 
        //Create the tooltip label
        svg.append("text")
@@ -170,7 +170,7 @@ let visualiseData = () => {
           .attr("font-size", "11px")
           .attr("font-weight", "bold")
           .attr("fill", "black")
-          .text(d.name);
+          .text(d.name + ' ' + d.vei);
 
       })
       .on("mouseout", function() {
