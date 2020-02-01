@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
     dataset = data
 		console.log('dataset', dataset)
 		console.log('volcanos', data[601].Latitude, ':', data[601].Longitude)
-    visualiseData()
 	})
 
   d3.json('/data/world.json', function(err, json) {
@@ -32,8 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
      .enter()
      .append("path")
      .attr("d", path)
-     .attr("z-index", -1)
      .style("fill", "steelblue")
+     visualiseData()
 })
 
 var projection = d3.geoEquirectangular()
@@ -149,18 +148,39 @@ let visualiseData = () => {
      .attr("r", function(d) {
      		return rScale(parseInt(d.vei))
      })
+     .style("opacity", 0.75)
      .attr("class", function(d) {
        return "data-circle"
      })
-  }
+  .on("mouseover", function(d) {
 
-  svg.selectAll("text")
-    .data(nodes)
-    .enter()
-    .on("hover", function() {
+       //Get this bar's x/y values, then augment for the tooltip
+       // var xPosition = parseFloat(d3.select(this).attr("x")) + xScale.bandwidth() / 2;
+       // var yPosition = parseFloat(d3.select(this).attr("y")) + 14;
 
-    })
+       console.log(d.name);
 
+       //Create the tooltip label
+       svg.append("text")
+          .attr("id", "tooltip")
+          .attr("x", d.long)
+          .attr("y", d.lat)
+          .attr("text-anchor", "middle")
+          .attr("font-family", "sans-serif")
+          .attr("font-size", "11px")
+          .attr("font-weight", "bold")
+          .attr("fill", "black")
+          .text(d.name);
+
+      })
+      .on("mouseout", function() {
+
+       //Remove the tooltip
+       d3.select("#tooltip").remove();
+
+      })
+
+    }
 
 
 
