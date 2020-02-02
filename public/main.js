@@ -131,29 +131,11 @@ document.addEventListener('DOMContentLoaded', () => {
        })
        .on("mouseover", function(d) {
 
-         //Get this bar's x/y values, then augment for the tooltip
-         // var xPosition = parseFloat(d3.select(this).attr("x")) + xScale.bandwidth() / 2;
-         // var yPosition = parseFloat(d3.select(this).attr("y")) + 14;
-
          console.log(d.name, d.vei);
-
-         //Create the tooltip label
-         // svg.append("text")
-         //    .attr("id", "tooltip")
-         //    .attr("x", d.long)
-         //    .attr("y", d.lat)
-         //    .attr("text-anchor", "middle")
-         //    .attr("font-family", "sans-serif")
-         //    .attr("font-size", "11px")
-         //    .attr("font-weight", "bold")
-         //    .attr("fill", "black")
-         //    .text(d.name + ' ' + d.vei);
 
         })
         .on("mouseout", function() {
 
-         //Remove the tooltip
-         d3.select("#tooltip").remove();
 
         })
         //Bind data and create one path per GeoJSON feature
@@ -189,7 +171,8 @@ document.addEventListener('DOMContentLoaded', () => {
          .append("path")
          .attr("d", path)
          .style("fill", "steelblue")
-         visualiseData()
+
+       visualiseData()
     })
 
 
