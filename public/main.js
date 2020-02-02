@@ -24,132 +24,173 @@ document.addEventListener('DOMContentLoaded', () => {
 		console.log('volcanos', data[601].Latitude, ':', data[601].Longitude)
 	})
 
-  d3.json('/data/world.json', function(err, json) {
-  //Bind data and create one path per GeoJSON feature
-  svg.selectAll("path")
-     .data(json.features)
-     .enter()
-     .append("path")
-     .attr("d", path)
-     .style("fill", "steelblue")
-     visualiseData()
-})
 
-var projection = d3.geoEquirectangular()
-                      // .scale(100)
-                      // .center([0, 0])
-                      // .translate([0, 0])
-                      // .fitSize([w, h], geojson)
-                      // .fitExtent([[0, 0], [w, h]], geojson)
-                      .translate([w/2, h/2])
-                      // .scale([200])
+  // Render map with equirectangluar view
+  var projection = d3.geoEquirectangular()
+                        // .scale(100)
+                        // .center([0, 0])
+                        // .translate([0, 0])
+                        // .fitSize([w, h], geojson)
+                        // .fitExtent([[0, 0], [w, h]], geojson)
+                        .translate([w/2, h/2])
+                        // .scale([200])
 
   //Define path generator, using the Albers USA projection
-	var path = d3.geoPath()
+  var path = d3.geoPath()
     			 		 .projection(projection)
 
 
-	//Create SVG element
-	var svg = d3.select("body")
+  //Create SVG element
+  var svg = d3.select("body")
     					.append("svg")
     					.attr("width", w)
     					.attr("height", h)
 
+  //Create a container in which all zoom-able elements will live
+  var map = svg.append("g")
+  			.attr("id", "map")
+  			// .call(zoom)  //Bind the zoom behavior
+  			// 	.call(zoom.transform, d3.zoomIdentity  //Then apply the initial transform
+  			// 	.translate(w/2, h/2)
+  			// 	.scale(0.25)
+  			// 	.translate(-center[0], -center[1]));
 
-let visualiseData = () => {
+  //Create a new, invisible background rect to catch zoom events
+	map.append("rect")
+		.attr("x", 0)
+		.attr("y", 0)
+		.attr("width", w)
+		.attr("height", h)
+		.attr("opacity", 0);
 
-	//Create scale functions
-	var xScale = d3.scale
-              .linear()
-              .domain([-180, 180])
-              .range([padding, w - padding * 2])
 
-	var yScale = d3.scale
-              .linear()
-              .domain([-90, 90])
-              .range([h - padding, padding])
+  const visualiseData = () => {
 
-  var rScale = d3.scale
-              .linear()
-              .domain([0, 10])
-              .range([0, 10]);
-  //
-	// var yScale = d3.scaleLinear()
-	// 					 .domain([0, d3.max(dataset, function(d) { return d.long })])
-	// 					 .range([0, h])
+  	//Create scale functions
+  	var xScale = d3.scale
+                .linear()
+                .domain([-180, 180])
+                .range([padding, w - padding * 2])
 
-  // Extract from dataset
-  dataset.forEach((val, i, array) => {
-    let node = {}
-    node.name = val['Name']
-    node.date = new Date(val['Year'], 1, 1, 0, 0, 0, 0)
-    node.type = val['Type']
-    node.lat = val['Latitude']
-    node.long = val['Longitude']
-    if ('' == node.type) node.type = 'Type N/A'
-    node.vei = val['Volcano Explosivity Index (VEI)']
-    if (node.vei) nodes.push(node)
-    if (labels.indexOf(node.type) == -1) labels.push(node.type)
-  })
-  console.log("nodes:", nodes)
-  // Sort nodes by date
-  nodes.sort(function(a, b) {return a.date - b.date})
+  	var yScale = d3.scale
+                .linear()
+                .domain([-90, 90])
+                .range([h - padding, padding])
 
-  // // Apply new properties to circles
-  // svg.selectAll(".data-circle")
-  // .attr("cx", function(d) { return d.lat })
-  // .attr("cy", function(d) { return d.long })
+    var rScale = d3.scale
+                .linear()
+                .domain([0, 10])
+                .range([0, 10]);
+    //
+  	// var yScale = d3.scaleLinear()
+  	// 					 .domain([0, d3.max(dataset, function(d) { return d.long })])
+  	// 					 .range([0, h])
 
-  // Create circles
-  svg.selectAll(".data-circle")
-     .data(nodes)
-     .enter()
-     .append("circle")
-     .attr("cx", function(d) {
-        if (d.long) return xScale(parseInt(d.long))
-     })
-     .attr("cy", function(d) {
-        if (d.lat) return yScale(parseInt(d.lat))
-     })
-     // .attr("r", function(d) {
-     //        return 10
-     //     })
-     .attr("r", function(d) {
-     		return rScale(parseInt(d.vei))
-     })
-     .style("opacity", 0.75)
-     .attr("class", function(d) {
-       return "data-circle"
-     })
-     .on("mouseover", function(d) {
+    // Extract from dataset
+    dataset.forEach((val, i, array) => {
+      let node = {}
+      node.name = val['Name']
+      node.date = new Date(val['Year'], 1, 1, 0, 0, 0, 0)
+      node.type = val['Type']
+      node.lat = val['Latitude']
+      node.long = val['Longitude']
+      if ('' == node.type) node.type = 'Type N/A'
+      node.vei = val['Volcano Explosivity Index (VEI)']
+      if (node.vei) nodes.push(node)
+      if (labels.indexOf(node.type) == -1) labels.push(node.type)
+    })
+    console.log("nodes:", nodes)
+    // Sort nodes by date
+    nodes.sort(function(a, b) {return a.date - b.date})
 
-       //Get this bar's x/y values, then augment for the tooltip
-       // var xPosition = parseFloat(d3.select(this).attr("x")) + xScale.bandwidth() / 2;
-       // var yPosition = parseFloat(d3.select(this).attr("y")) + 14;
+    // // Apply new properties to circles
+    // svg.selectAll(".data-circle")
+    // .attr("cx", function(d) { return d.lat })
+    // .attr("cy", function(d) { return d.long })
 
-       console.log(d.name, d.vei);
+    // Create circles
+    svg.selectAll(".data-circle")
+       .data(nodes)
+       .enter()
+       .append("circle")
+       .attr("cx", function(d) {
+          if (d.long) return xScale(parseInt(d.long))
+       })
+       .attr("cy", function(d) {
+          if (d.lat) return yScale(parseInt(d.lat))
+       })
+       // .attr("r", function(d) {
+       //        return 10
+       //     })
+       .attr("r", function(d) {
+       		return rScale(parseInt(d.vei))
+       })
+       .style("opacity", 0.75)
+       .attr("class", function(d) {
+         return "data-circle"
+       })
+       .on("mouseover", function(d) {
 
-       //Create the tooltip label
-       svg.append("text")
-          .attr("id", "tooltip")
-          .attr("x", d.long)
-          .attr("y", d.lat)
-          .attr("text-anchor", "middle")
-          .attr("font-family", "sans-serif")
-          .attr("font-size", "11px")
-          .attr("font-weight", "bold")
-          .attr("fill", "black")
-          .text(d.name + ' ' + d.vei);
+         //Get this bar's x/y values, then augment for the tooltip
+         // var xPosition = parseFloat(d3.select(this).attr("x")) + xScale.bandwidth() / 2;
+         // var yPosition = parseFloat(d3.select(this).attr("y")) + 14;
 
-      })
-      .on("mouseout", function() {
+         console.log(d.name, d.vei);
 
-       //Remove the tooltip
-       d3.select("#tooltip").remove();
+         //Create the tooltip label
+         // svg.append("text")
+         //    .attr("id", "tooltip")
+         //    .attr("x", d.long)
+         //    .attr("y", d.lat)
+         //    .attr("text-anchor", "middle")
+         //    .attr("font-family", "sans-serif")
+         //    .attr("font-size", "11px")
+         //    .attr("font-weight", "bold")
+         //    .attr("fill", "black")
+         //    .text(d.name + ' ' + d.vei);
 
-      })
+        })
+        .on("mouseout", function() {
 
-    }
+         //Remove the tooltip
+         d3.select("#tooltip").remove();
+
+        })
+        //Bind data and create one path per GeoJSON feature
+        map.selectAll("path")
+           .data(nodes)
+           .enter()
+           .append("path")
+           .attr("d", path)
+
+        //Create one label per state
+         map.selectAll("text")
+        	.data(nodes)
+        	.enter()
+        	.append("text")
+        	.attr("class", "label")
+        	.attr("x", function(d) {
+             if (d.long) return xScale(parseInt(d.long))
+        	})
+        	.attr("y", function(d) {
+        		 if (d.lat) return xScale(parseInt(d.lat))
+        	})
+        	.text(function(d) {
+              return d.name
+        	});
+
+      }
+
+      d3.json('/data/world.json', function(err, json) {
+      // Bind data and create one path per GeoJSON feature
+      svg.selectAll("path")
+         .data(json.features)
+         .enter()
+         .append("path")
+         .attr("d", path)
+         .style("fill", "steelblue")
+         visualiseData()
+    })
 
 
 })
