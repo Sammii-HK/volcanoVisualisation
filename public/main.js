@@ -119,13 +119,14 @@ document.addEventListener('DOMContentLoaded', () => {
        .attr("cy", function(d) {
           if (d.lat) return yScale(parseInt(d.lat))
        })
-       // .attr("r", function(d) {
-       //        return 10
-       //     })
        .attr("r", function(d) {
        		return rScale(parseInt(d.vei))
        })
-       .style("opacity", 0.75)
+       .attr("fill", function(d) {
+        // return "rgb(0, 0, " + Math.round(d * 10) + ")";
+        return "rgb(" + Math.round(d.vei * 5) + ", 0, 0)";
+      })
+       .style("opacity", 0.65)
        .attr("class", function(d) {
          return "data-circle"
        })
@@ -152,10 +153,10 @@ document.addEventListener('DOMContentLoaded', () => {
         	.append("text")
         	.attr("class", "label")
         	.attr("x", function(d) {
-             if (d.long) return xScale(parseInt(d.long))
+             if (d.long) return xScale(parseInt(d.long) + 1)
         	})
         	.attr("y", function(d) {
-        		 if (d.lat) return yScale(parseInt(d.lat))
+        		 if (d.lat) return yScale(parseInt(d.lat) + 1)
         	})
         	.text(function(d) {
               return d.name + '–' + d.vei
