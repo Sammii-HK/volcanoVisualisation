@@ -28,12 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Render map with equirectangluar view
   var projection = d3.geoEquirectangular()
                         .translate([w/2, h/2])
-                        // .scale(100)
-                        // .center([0, 0])
-                        // .translate([0, 0])
-                        // .fitSize([w, h], geojson)
-                        // .fitExtent([[0, 0], [w, h]], geojson)
-                        // .scale([200])
+                  
 
   //Define path generator, using the Albers USA projection
   var path = d3.geoPath()
