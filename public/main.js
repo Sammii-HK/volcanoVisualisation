@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
              if (d.long) return xScale(parseInt(d.long))
         	})
         	.attr("y", function(d) {
-        		 if (d.lat) return xScale(parseInt(d.lat))
+        		 if (d.lat) return yScale(parseInt(d.lat))
         	})
         	.text(function(d) {
               return d.name + '–' + d.vei
