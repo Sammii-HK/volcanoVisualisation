@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Render map with equirectangluar view
   var projection = d3.geoEquirectangular()
                         .translate([w/2, h/2])
-                  
+
 
   //Define path generator, using the Albers USA projection
   var path = d3.geoPath()
@@ -92,6 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if ('' == node.type) node.type = 'Type N/A'
       node.vei = val['Volcano Explosivity Index (VEI)']
       if (node.vei) nodes.push(node)
+      // if (node.date < 1, 1, 1, 1900, 0, 0) nodes.delete(node)
       if (labels.indexOf(node.type) == -1) labels.push(node.type)
     })
     console.log("nodes:", nodes)
@@ -126,7 +127,8 @@ document.addEventListener('DOMContentLoaded', () => {
          return "data-circle"
        })
        .on("mouseover", function(d) {
-
+         d3.select(this)
+         .attr("fill", "orange");
          console.log(d.name, d.vei);
 
         })
@@ -155,7 +157,18 @@ document.addEventListener('DOMContentLoaded', () => {
         	})
         	.text(function(d) {
               return d.name + '–' + d.vei
-        	});
+        	})
+          .on("mouseover", function(d) {
+            d3.select(this)
+            .attr("display", "flex");
+            console.log(d.name, d.vei);
+
+           })
+           .on("mouseout", function() {
+             d3.select(this)
+             .attr("display", "none");
+
+           })
 
       }
 
