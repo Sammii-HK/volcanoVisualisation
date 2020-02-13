@@ -158,15 +158,16 @@ document.addEventListener('DOMContentLoaded', () => {
         	.text(function(d) {
               return d.name + '–' + d.vei
         	})
+          .attr("opacity", 0)
           .on("mouseover", function(d) {
             d3.select(this)
-            .attr("display", "flex");
+            .attr("opacity", 1);
             console.log(d.name, d.vei);
 
            })
            .on("mouseout", function() {
              d3.select(this)
-             .attr("display", "none");
+             .attr("opacity", 0);
 
            })
 
