@@ -150,15 +150,18 @@ document.addEventListener('DOMContentLoaded', () => {
         	.append("text")
         	.attr("class", "label")
         	.attr("x", function(d) {
-             if (d.long) return xScale(parseInt(d.long) + 1)
+             if (d.long) return xScale(parseInt(d.long))
         	})
         	.attr("y", function(d) {
-        		 if (d.lat) return yScale(parseInt(d.lat) + 1)
+        		 if (d.lat) return yScale(parseInt(d.lat))
         	})
         	.text(function(d) {
               return d.name + '–' + d.vei
         	})
           .attr("opacity", 0)
+          // .attr("padding", "10px")
+          .attr("cursor", "arrow")
+          // .attr("z-index", 5)
           .on("mouseover", function(d) {
             d3.select(this)
             .attr("opacity", 1);
