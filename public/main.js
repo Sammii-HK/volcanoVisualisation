@@ -142,12 +142,9 @@ document.addEventListener('DOMContentLoaded', () => {
              console.log(d.name, d.vei, d.index);
              console.log('this circle', this);
           // select corresponding text label
-          // d3.selectAll("text").select(`.${d.index}`)
-
           d3.select(`text.\\${d.index}`)
             .attr("opacity", 1);
             console.log('this text', this)
-          // d3.select(`text.${d.index`)
        })
       .on("mouseout", function() {
           d3.select(this)
