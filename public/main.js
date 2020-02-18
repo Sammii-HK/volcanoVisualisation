@@ -130,14 +130,24 @@ document.addEventListener('DOMContentLoaded', () => {
        // .attr("id", function(d) {
        //   return d.id
        // })
+      // .on("mouseover", function(d) {
+      //   d3.select(`text.${d.index}`)
+      //     console.log('this text', this)
+      //   // d3.select(`text.${d.index`)
+      //     .attr("opacity", 1);
+      // })
       .on("mouseover", function(d) {
           d3.select(this)
              .attr("fill", "orange");
              console.log(d.name, d.vei, d.index);
+             console.log('this circle', this);
           // select corresponding text label
           // d3.selectAll("text").select(`.${d.index}`)
-          d3.select(`text.${d.index}`)
+
+          d3.select(`text.\\${d.index}`)
             .attr("opacity", 1);
+            console.log('this text', this)
+          // d3.select(`text.${d.index`)
        })
       .on("mouseout", function() {
           d3.select(this)
@@ -157,9 +167,9 @@ document.addEventListener('DOMContentLoaded', () => {
     	.data(nodes)
     	.enter()
     	.append("text")
-    	.attr("class", "label")
+    	// .attr("class", "label")
       .attr("class", function(d) {
-        return d.index
+        return `label ${d.index}`
       })
     	.attr("x", function(d) {
          if (d.long) return xScale(parseInt(d.long))
@@ -170,7 +180,11 @@ document.addEventListener('DOMContentLoaded', () => {
     	.text(function(d) {
           return d.name + '–' + d.vei
     	})
-      .attr("opacity", 0);
+      .attr("opacity", 0)
+      .on("mouseover", function(d) {
+          d3.select(this)
+             console.log('this text 2', this)
+       })
       // .attr("opacity", 0)
       // // .attr("padding", "10px")
       // .attr("cursor", "arrow")

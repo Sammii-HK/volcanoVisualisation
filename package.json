@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "d3": "^5.15.0",
+    "d3-selection": "^1.4.1",
     "express": "^4.17.1"
   },
   "scripts": {}
