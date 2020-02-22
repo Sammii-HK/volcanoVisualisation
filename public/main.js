@@ -137,14 +137,14 @@ document.addEventListener('DOMContentLoaded', () => {
       //     .attr("opacity", 1);
       // })
       .on("mouseover", function(d) {
-          d3.select(this)
-             .attr("fill", "orange");
-             console.log(d.name, d.vei, d.index);
-             console.log('this circle', this);
-          // select corresponding text label
-          d3.select(`text.\\${d.index}`)
-            .attr("opacity", 1);
-            console.log('this text', this)
+        // select corresponding text label
+        d3.select(`text.\\${d.index}`)
+          .attr("opacity", 1);
+          console.log('this text', this)
+        d3.select(this)
+           .attr("fill", "orange");
+           console.log(d.name, d.vei, d.index);
+           console.log('this circle', this);
        })
       .on("mouseout", function() {
           d3.select(this)
