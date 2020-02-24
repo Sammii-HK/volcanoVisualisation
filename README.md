@@ -36,3 +36,23 @@ I have used d3.js to read through the data and place it on a map rendered from G
 ```
 
 I extracted the data I needed from the CVS data set.
+
+As the circles are created, they are placed on the x & y Axis accordindly on the canvas. The circles radius is also determined by the 'VEI' or Volcano Explosivity Index.
+
+```js
+// Create circles
+    svg.selectAll(".data-circle")
+       .data(nodes)
+       .enter()
+       .append("circle")
+       .attr("cx", function(d) {
+          if (d.long) return xScale(parseInt(d.long))
+       })
+       .attr("cy", function(d) {
+          if (d.lat) return yScale(parseInt(d.lat))
+       })
+       .attr("r", function(d) {
+       		return rScale(parseInt(d.vei))
+       })
+```
+
