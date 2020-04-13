@@ -107,6 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
       node.type = val['Type']
       node.lat = val['Latitude']
       node.long = val['Longitude']
+      node.index = i
       if ('' == node.type) node.type = 'Type N/A'
       node.vei = val['Volcano Explosivity Index (VEI)']
       if (node.vei) nodes.push(node)
@@ -128,22 +129,23 @@ document.addEventListener('DOMContentLoaded', () => {
        .enter()
        .append("circle")
        .attr("cx", function(d) {
-          if (d.long) return xScale(parseInt(d.long))
+          if (d.long) return xScale(parseInt(d.long) + 1)
        })
        .attr("cy", function(d) {
-          if (d.lat) return yScale(parseInt(d.lat))
+          if (d.lat) return yScale(parseInt(d.lat) + 1)
        })
        .attr("r", function(d) {
        		return rScale(parseInt(d.vei))
        })
        .attr("fill", function(d) {
-        // return "rgb(0, 0, " + Math.round(d * 10) + ")";
-        return "rgb(" + Math.round(d.vei * 5) + ", 0, 0)";
-      })
+          // return "rgb(0, 0, " + Math.round(d * 10) + ")";
+          return "rgb(" + Math.round(d.vei * 5) + ", 0, 0)";
+       })
        .style("opacity", 0.65)
        .attr("class", function(d) {
-         return "data-circle"
+         return `data-circle ${d.index}`
        })
+<<<<<<< HEAD
 
        .on("mouseover", function(d, i) {
          // d3.select(this)
@@ -225,6 +227,92 @@ document.addEventListener('DOMContentLoaded', () => {
 
        visualiseData()
     })
+=======
+       // .attr("id", function(d) {
+       //   return d.id
+       // })
+      // .on("mouseover", function(d) {
+      //   d3.select(`text.${d.index}`)
+      //     console.log('this text', this)
+      //   // d3.select(`text.${d.index`)
+      //     .attr("opacity", 1);
+      // })
+      .on("mouseover", function(d) {
+        // select corresponding text label
+        d3.select(`text.\\${d.index}`)
+          .attr("opacity", 1);
+          console.log('this text', this)
+        d3.select(this)
+           .attr("fill", "orange");
+           console.log(d.name, d.vei, d.index);
+           console.log('this circle', this);
+       })
+      .on("mouseout", function() {
+          d3.select(this)
+            .style("fill", "black")
+
+      })
+
+    //Bind data and create one path per GeoJSON feature
+    map.selectAll("path")
+       .data(nodes)
+       .enter()
+       .append("path")
+       .attr("d", path)
+
+    //Create one label per state
+    map.selectAll("text")
+    	.data(nodes)
+    	.enter()
+    	.append("text")
+    	// .attr("class", "label")
+      .attr("class", function(d) {
+        return `label ${d.index}`
+      })
+    	.attr("x", function(d) {
+         if (d.long) return xScale(parseInt(d.long))
+    	})
+    	.attr("y", function(d) {
+    		 if (d.lat) return yScale(parseInt(d.lat))
+    	})
+    	.text(function(d) {
+          return d.name + '–' + d.vei
+    	})
+      .attr("opacity", 0)
+      .on("mouseover", function(d) {
+          d3.select(this)
+             console.log('this text 2', this)
+       })
+      // .attr("opacity", 0)
+      // // .attr("padding", "10px")
+      // .attr("cursor", "arrow")
+      // // .attr("z-index", 5)
+      // .on("mouseover", function(d) {
+      //   d3.select(this)
+      //   .attr("opacity", 1);
+      //   console.log(d.name, d.vei, d.index);
+      //
+      // })
+      //  .on("mouseout", function() {
+      //    d3.select(this)
+      //    .attr("opacity", 0);
+      //
+      // })
+
+     }
+
+     d3.json('/data/world.json', function(err, json) {
+     // Bind data and create one path per GeoJSON feature
+     svg.selectAll("path")
+        .data(json.features)
+        .enter()
+        .append("path")
+        .attr("d", path)
+        .style("fill", "steelblue")
+
+     visualiseData()
+  })
+>>>>>>> 7b62320fa5592482f320d6f4e930df69ae7ffe05
 
 
 })
