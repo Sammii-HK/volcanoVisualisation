@@ -12,11 +12,17 @@ title {
 }
 
 .text-box {
-  width: 100px;
+  width: 250px;
   height: 50px;
   /* background-color: orange; */
-  border: 1px solid orange;
-  font-size: 16px;
+  /* border: 1px solid orange; */
+  font-size: 24px;
   font-weight: 600;
-  color: black;
+  color: white;
+  position: fixed;
+  bottom: 50px;
+  /* top: 50px; */
+  right: 25px;
+  display: flex;
+  align-items: center;
 }

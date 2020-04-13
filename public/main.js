@@ -32,6 +32,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Render map with equirectangluar view
   var projection = d3.geoEquirectangular()
                         .translate([w/2, h/2])
+  // var projection = d3.geo.orthographic()
+  //   .scale(h / 2.0)
+  //   .translate([w / 2, h / 2])
 
 
   //Define path generator, using the Albers USA projection
@@ -147,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
          //   .attr("fill", "orange");
            console.log(d.name, d.vei, i)
 
-           d3.select('.text-box').text (d.name + '-' + d.vei)
+           d3.select('.text-box').text (d.name + ' - VEI: ' + d.vei)
 
            // active = [d.name]
            // active.push(d.name)
@@ -171,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         })
         .on("mouseout", function() {
-          active = []
+          d3.select('.text-box').text('')
         })
         //Bind data and create one path per GeoJSON feature
         map.selectAll("path")
