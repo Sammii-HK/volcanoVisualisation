@@ -12,6 +12,9 @@ let throttleIndex = 0
 let throttleNum = 10
 let timer
 let labels = []
+
+let active = []
+
 let color = d3.scale.category20()
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -20,8 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   d3.csv("/data/significantvolcanoeruptions.csv", function(data) {
     dataset = data
-		console.log('dataset', dataset)
-		console.log('volcanos', data[601].Latitude, ':', data[601].Longitude)
+
+		// console.log('dataset', dataset)
+		// console.log('volcanos', data[601].Latitude, ':', data[601].Longitude)
 	})
 
 
@@ -56,7 +60,18 @@ document.addEventListener('DOMContentLoaded', () => {
 		.attr("y", 0)
 		.attr("width", w)
 		.attr("height", h)
-		.attr("opacity", 0);
+		.attr("opacity", 0)
+
+  //Create a box for roll over events
+	d3.select("body").append("div")
+    .attr("class", "text-box")
+    // .text('hi')
+    // .text(active)
+		// .attr("x", 500)
+		// .attr("y", 500)
+		// .attr("width", 50)
+		// .attr("height", 20)
+    // .attr("fill", "orange")
 
 
   const visualiseData = () => {
@@ -126,15 +141,37 @@ document.addEventListener('DOMContentLoaded', () => {
        .attr("class", function(d) {
          return "data-circle"
        })
-       .on("mouseover", function(d) {
-         d3.select(this)
-         .attr("fill", "orange");
-         console.log(d.name, d.vei);
+
+       .on("mouseover", function(d, i) {
+         // d3.select(this)
+         //   .attr("fill", "orange");
+           console.log(d.name, d.vei, i)
+
+           d3.select('.text-box').text (d.name + '-' + d.vei)
+
+           // active = [d.name]
+           // active.push(d.name)
+
+          // d3.select("text-box")
+          //   .insert("p")
+          //   .text(d.name)
+            // .text(function(d) {
+            //   return d.name + '–' + d.vei
+            // })
+
+         // d3.select("body").select("text-box")
+         //  // .append("p").text(d.name)
+         //  .append("text")
+         //  .text(function(d) {
+         //      return d.name + '–' + d.vei
+        	// })
+
+          // make a box, put the text from roll over item in it
+
 
         })
         .on("mouseout", function() {
-
-
+          active = []
         })
         //Bind data and create one path per GeoJSON feature
         map.selectAll("path")
@@ -159,17 +196,18 @@ document.addEventListener('DOMContentLoaded', () => {
               return d.name + '–' + d.vei
         	})
           .attr("opacity", 0)
-          .on("mouseover", function(d) {
-            d3.select(this)
-            .attr("opacity", 1);
-            console.log(d.name, d.vei);
 
-           })
-           .on("mouseout", function() {
-             d3.select(this)
-             .attr("opacity", 0);
-
-           })
+          // .on("mouseover", function(d) {
+          //   d3.select(this)
+          //   // .attr("opacity", 1);
+          //   // console.log(d.name, d.vei);
+          //
+          //  })
+          //  .on("mouseout", function() {
+          //    d3.select(this)
+          //    .attr("opacity", 0);
+          //
+          //  })
 
       }
 
