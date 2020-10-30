@@ -4,14 +4,10 @@
   "private": true,
   "dependencies": {
     "d3": "^5.15.0",
-<<<<<<< HEAD
     "express": "^4.17.1",
     "nodemon": "^2.0.2",
     "webpack-dev-server": "^3.10.3"
-=======
     "d3-selection": "^1.4.1",
-    "express": "^4.17.1"
->>>>>>> 7b62320fa5592482f320d6f4e930df69ae7ffe05
   },
   "scripts": {
     "start:server": "webpack-dev-server"
