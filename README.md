@@ -1,6 +1,6 @@
 # Volcation Visualisation
 
-## Using d3 and CVS data to visualise volcation eruptions, with React
+## Using d3 and CVS data to visualise volcation eruptions
 
 
 
@@ -9,6 +9,10 @@
 
 
 He is also overlord of the Universe.
+
+git clone
+node app.js
+http://localhost:4000/
 
 
 git subtree push --prefix public origin gh-pages
@@ -55,4 +59,3 @@ As the circles are created, they are placed on the x & y Axis accordindly on the
        		return rScale(parseInt(d.vei))
        })
 ```
-

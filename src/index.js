@@ -20,22 +20,15 @@ let color = d3.scale.category20()
 document.addEventListener('DOMContentLoaded', () => {
   console.log('JS loaded')
 
-
+  // Import dataset
   d3.csv("/data/significantvolcanoeruptions.csv", function(data) {
     dataset = data
-
-		// console.log('dataset', dataset)
-		// console.log('volcanos', data[601].Latitude, ':', data[601].Longitude)
 	})
 
 
   // Render map with equirectangluar view
   var projection = d3.geoEquirectangular()
                         .translate([w/2, h/2])
-  // var projection = d3.geo.orthographic()
-  //   .scale(h / 2.0)
-  //   .translate([w / 2, h / 2])
-
 
   //Define path generator, using the Albers USA projection
   var path = d3.geoPath()
@@ -51,11 +44,6 @@ document.addEventListener('DOMContentLoaded', () => {
   //Create a container in which all zoom-able elements will live
   var map = svg.append("g")
   			.attr("id", "map")
-  			// .call(zoom)  //Bind the zoom behavior
-  			// 	.call(zoom.transform, d3.zoomIdentity  //Then apply the initial transform
-  			// 	.translate(w/2, h/2)
-  			// 	.scale(0.25)
-  			// 	.translate(-center[0], -center[1]));
 
   //Create a new, invisible background rect to catch zoom events
 	map.append("rect")
@@ -68,13 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
   //Create a box for roll over events
 	d3.select("body").append("div")
     .attr("class", "text-box")
-    // .text('hi')
-    // .text(active)
-		// .attr("x", 500)
-		// .attr("y", 500)
-		// .attr("width", 50)
-		// .attr("height", 20)
-    // .attr("fill", "orange")
 
 
   const visualiseData = () => {
@@ -94,10 +75,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 .linear()
                 .domain([0, 10])
                 .range([0, 10]);
-    //
-  	// var yScale = d3.scaleLinear()
-  	// 					 .domain([0, d3.max(dataset, function(d) { return d.long })])
-  	// 					 .range([0, h])
 
     // Extract from dataset
     dataset.forEach((val, i, array) => {
@@ -118,12 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Sort nodes by date
     nodes.sort(function(a, b) {return a.date - b.date})
 
-    // // Apply new properties to circles
-    // svg.selectAll(".data-circle")
-    // .attr("cx", function(d) { return d.lat })
-    // .attr("cy", function(d) { return d.long })
-
-    // Create circles
+    // Create circles to visualise data
     svg.selectAll(".data-circle")
        .data(nodes)
        .enter()
@@ -146,37 +118,19 @@ document.addEventListener('DOMContentLoaded', () => {
          return `data-circle ${d.index}`
        })
 
+       // On mouse over, select and print data
        .on("mouseover", function(d, i) {
          // d3.select(this)
          //   .attr("fill", "orange");
            console.log(d.name, d.vei, i)
 
            d3.select('.text-box').text (d.name + ' - VEI: ' + d.vei)
-
-           // active = [d.name]
-           // active.push(d.name)
-
-          // d3.select("text-box")
-          //   .insert("p")
-          //   .text(d.name)
-            // .text(function(d) {
-            //   return d.name + '–' + d.vei
-            // })
-
-         // d3.select("body").select("text-box")
-         //  // .append("p").text(d.name)
-         //  .append("text")
-         //  .text(function(d) {
-         //      return d.name + '–' + d.vei
-        	// })
-
-          // make a box, put the text from roll over item in it
-
-
         })
+        //  On mouse out clear data
         .on("mouseout", function() {
           d3.select('.text-box').text('')
         })
+
         //Bind data and create one path per GeoJSON feature
         map.selectAll("path")
            .data(nodes)
@@ -199,20 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
         	.text(function(d) {
               return d.name + '–' + d.vei
         	})
-          .attr("opacity", 0)
-
-          // .on("mouseover", function(d) {
-          //   d3.select(this)
-          //   // .attr("opacity", 1);
-          //   // console.log(d.name, d.vei);
-          //
-          //  })
-          //  .on("mouseout", function() {
-          //    d3.select(this)
-          //    .attr("opacity", 0);
-          //
-          //  })
-
+          .attr("opacity", 1)
       }
 
       d3.json('/data/world.json', function(err, json) {
