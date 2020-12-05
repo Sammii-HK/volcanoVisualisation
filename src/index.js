@@ -25,7 +25,7 @@ const center = [width/2, height/2]
 
   drawGlobe()
   drawGraticule()
-  // enableRotation()
+  enableRotation()
 
 function drawGlobe() {
   d3.queue()
@@ -61,13 +61,13 @@ function drawGraticule() {
         .style("stroke", "#ccc")
 }
 
-// function enableRotation() {
-//     d3.timer(function (elapsed) {
-//         projection.rotate([config.speed * elapsed - 120, config.verticalTilt, config.horizontalTilt])
-//         svg.selectAll("path").attr("d", path)
-//         drawMarkers()
-//     })
-// }
+function enableRotation() {
+    d3.timer(function (elapsed) {
+        projection.rotate([config.speed * elapsed - 120, config.verticalTilt, config.horizontalTilt])
+        svg.selectAll("path").attr("d", path)
+        drawMarkers()
+    })
+}
 
 function drawMarkers() {
     const markers = markerGroup.selectAll('circle')
