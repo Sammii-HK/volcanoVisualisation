@@ -2,6 +2,11 @@
 
 ## Using d3 and CVS data to visualise volcation eruptions
 
+Flat Map with Volcanos plotted
+<img width="1288" alt="Screenshot 2021-12-02 at 22 42 16" src="https://user-images.githubusercontent.com/40900195/144514828-a064647a-8d66-4aab-a80a-665d822b896a.png">
+
+3D Geo Orth framework
+<img width="666" alt="Screenshot 2021-12-02 at 22 38 37" src="https://user-images.githubusercontent.com/40900195/144514842-4bd24377-ac2a-4a5b-8aa1-7ad2c999e134.png">
 
 
 #### [Dexter](https://github.com/Dextorr/) is awesome
