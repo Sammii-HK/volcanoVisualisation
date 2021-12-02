@@ -1,4 +1,4 @@
-# Volcation Visualisation
+# 🌋 Volcation Visualisation
 
 ## Using d3 and CVS data to visualise volcation eruptions
 
