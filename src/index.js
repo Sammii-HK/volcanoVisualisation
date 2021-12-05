@@ -25,7 +25,7 @@ const center = [width/2, height/2]
 
   drawGlobe()
   drawGraticule()
-  enableRotation()
+  // enableRotation()
 
 function drawGlobe() {
   d3.queue()
@@ -37,9 +37,13 @@ function drawGlobe() {
           .enter().append("path")
           .attr("class", "segment")
           .attr("d", path)
-          .style("stroke", "#888")
-          .style("stroke-width", "1px")
-          .style("fill", (d, i) => '#e5e5e5')
+          // .style("stroke", "#888")
+          // .style("stroke-width", "1px")
+          .style("fill", "#eaeaea")
+          .style("stroke", "#ccc")
+          .style("stroke-width", "0.3px")
+          // .style("fill", (d, i) => '#e5e5e5')
+          // .style("fill", d => '#000000')
           .style("opacity", ".6")
           locations = locationData
           drawMarkers()
@@ -57,17 +61,28 @@ function drawGraticule() {
         .datum(graticule)
         .attr("class", "graticule")
         .attr("d", path)
-        .style("fill", "#fff")
+        // .style("fill", "#fff")
         .style("stroke", "#ccc")
-}
+        .style("stroke-width", "0.3px")
+      }
 
-function enableRotation() {
-    d3.timer(function (elapsed) {
-        projection.rotate([config.speed * elapsed - 120, config.verticalTilt, config.horizontalTilt])
-        svg.selectAll("path").attr("d", path)
-        drawMarkers()
-    })
-}
+// function enableRotation() {
+//     d3.timer(function (elapsed) {
+//         projection.rotate([config.speed * elapsed - 120, config.verticalTilt, config.horizontalTilt])
+//         svg.selectAll("path").attr("d", path)
+//         drawMarkers()
+//     })
+// }
+
+svg.call(d3.drag()
+    .on("drag", function() {
+      var xy = d3.mouse(this);
+      projection.rotate(xy)
+      svg.selectAll("path")
+        .attr("d",path);
+        // drawGlobe();
+        drawMarkers();
+    }))
 
 function drawMarkers() {
     const markers = markerGroup.selectAll('circle')
