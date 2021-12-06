@@ -15,19 +15,17 @@ const center = [width/2, height/2]
 
 document.addEventListener('DOMContentLoaded', () => {
   svg = d3.select('body')
-  .append('svg')
-  .attr('width', width)
-  .attr('height', height)
-  .attr('class', 'container')
+    .append('svg')
+    .attr('width', width)
+    .attr('height', height)
+    .attr('class', 'container')
   
   markerGroup = svg.append('g')
 
   svg.call(d3.drag()
     .on("drag", function() {
-      var xy = d3.mouse(this);
-      projection.rotate(xy)
-      svg.selectAll("path")
-        .attr("d",path);
+      var x = d3.mouse(this);
+      projection.rotate([x[0], -15])
       svg.selectAll("path").attr("d",path);
       drawMarkers();
     })
