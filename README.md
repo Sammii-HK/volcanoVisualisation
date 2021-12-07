@@ -2,22 +2,14 @@
 
 ## Using d3 and CVS data to visualise volcation eruptions
 
-Flat Map with Volcanos plotted
+##### Mercator Projection with Volcanos Plotted
 <img width="1288" alt="Screenshot 2021-12-02 at 22 42 16" src="https://user-images.githubusercontent.com/40900195/144514828-a064647a-8d66-4aab-a80a-665d822b896a.png">
 
-3D Geo Orth framework
-<img width="666" alt="Screenshot 2021-12-02 at 22 38 37" src="https://user-images.githubusercontent.com/40900195/144514842-4bd24377-ac2a-4a5b-8aa1-7ad2c999e134.png">
+##### 3D GeoOrthographic Projection
+https://user-images.githubusercontent.com/40900195/145028913-45bbbcb3-7ab6-4397-a2f0-75e1e816f6ce.mov
 
 
-#### [Dexter](https://github.com/Dextorr/) is awesome
-
-
-
-He is also overlord of the Universe.
-
-git clone
-node app.js
-http://localhost:4000/
+```nodemon app.js```
 
 
 git subtree push --prefix public origin gh-pages
