@@ -1,26 +1,44 @@
 # Volcation Visualisation
 
-## Using d3 and CVS data to visualise volcation eruptions
+A full stack app, which plots volcano eruptions on a Orthographic projection map, using D3.js to visualise the data, running an Express server loading data stored as JSON.
 
+## Details
 
+### Timeframe
 
-#### [Dexter](https://github.com/Dextorr/) is awesome
+5 days
 
+### Technologies Used
 
+* [D3.js](https://d3js.org/)
+* Express
+* Javascript
 
-He is also overlord of the Universe.
+### App Overview
 
-git clone
-node app.js
-http://localhost:4000/
+To objective of this project is to plot data, using latitudinal and longatudinal co-ordinates, projected onto a geoOrthographic projection of a world map, using [D3.js](https://d3js.org/).
 
+#### Development Process
 
-git subtree push --prefix public origin gh-pages
+The volcano eruption data is rendered with D3.js and then plotted on a map rendered from GEOjson, solely using SVG coordinates.
 
-
-
-I have used d3.js to read through the data and place it on a map rendered from GEOjson, by the coordinates.
-
+```js
+  // Extract from dataset
+    dataset.forEach((val, i, array) => {
+      let node = {}
+      node.name = val['Name']
+      node.date = new Date(val['Year'], 1, 1, 0, 0, 0, 0)
+      node.type = val['Type']
+      node.lat = val['Latitude']
+      node.long = val['Longitude']
+      node.index = i
+      if ('' == node.type) node.type = 'Type N/A'
+      node.vei = val['Volcano Explosivity Index (VEI)']
+      if (node.vei) nodes.push(node)
+      // if (node.date < 1, 1, 1, 1900, 0, 0) nodes.delete(node)
+      if (labels.indexOf(node.type) == -1) labels.push(node.type)
+    })
+```
 ```js
   // Extract from dataset
     dataset.forEach((val, i, array) => {
@@ -59,3 +77,15 @@ As the circles are created, they are placed on the x & y Axis accordindly on the
        		return rScale(parseInt(d.vei))
        })
 ```
+
+#### Functionality
+
+To rotate the globe, use the cursor to drag and drop.
+
+### Challenges & Achievements
+
+An achievement was to render the globe with a geoOrthographic projection so that the world map was projected onto a sphere and able to be rotated.
+
+## Future enhancements
+
+* To implement spin momentum for a more natural feeling response when spinning the globe.
