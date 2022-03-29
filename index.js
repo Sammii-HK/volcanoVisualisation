@@ -15,6 +15,12 @@ let svg
 let markerGroup
 let x
 
+let spinVelocity = 0;
+let spinX = 0;
+let lastMouseX;
+let currentMouseX;
+let dampening = 0.9;
+
 document.addEventListener('DOMContentLoaded', () => {
   svg = d3.select('#globe-container')
     .append('svg')
@@ -24,32 +30,55 @@ document.addEventListener('DOMContentLoaded', () => {
   
   markerGroup = svg.append('g')
 
-  svg.call(d3.drag()
-    .on("drag", function() {
-      x = d3.mouse(this);
-      // getAnimationFrame/setInterval
-      // Get initial x value
-      // after 1 second get current x value
-      // send difference value to momentum function
-
-      // momentum function takes difference value
-      // it translates the difference to projecttion.rotate(x) over a dynamic amount of time
-      // the amount which the projection rotates starts as large4 increments
-      // and then decrements over time
-      // console.log("x", x[0]);
-      
-      requestAnimationFrame(() => {
-        projection.rotate([x[0], -15])
-        // 
-        svg.selectAll("path").attr("d",path);
-        drawMarkers();
-      });
-    })
-  )
   drawGlobe()
   // drawGraticule()
   console.log('JS loaded')
-})
+
+  animate();
+
+  document.body.addEventListener('pointerdown', (event) => {
+    event.preventDefault();
+    dragging = true;
+    return false;
+  });
+  
+  document.body.addEventListener('pointerup', () => {
+    dragging = false;
+    lastMouseX = undefined;
+  });
+
+  document.body.addEventListener('pointerleave', () => {
+    dragging = false;
+    lastMouseX = undefined;
+  });
+  
+  document.body.addEventListener('pointermove', (event) => {
+    event.preventDefault();
+    if (dragging) {
+      currentMouseX = event.clientX;
+  
+      requestAnimationFrame(() => {
+        if (lastMouseX !== undefined) {
+          spinVelocity = currentMouseX - lastMouseX;
+        }
+        lastMouseX = currentMouseX;
+      });
+    }
+  });
+});
+
+let dragging = false;
+
+function animate() {
+  projection.rotate([spinX, -15])
+  svg.selectAll("path").attr("d",path);
+  drawMarkers();
+
+  spinX += spinVelocity;
+  spinVelocity *= dampening;
+
+  requestAnimationFrame(animate);
+}
 
 const locationData = [
   {"latitude": 22, "longitude": 88},
