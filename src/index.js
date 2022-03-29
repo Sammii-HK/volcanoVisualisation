@@ -116,5 +116,3 @@ function drawMarkers() {
   markerGroup.each(function () {
     this.parentNode.appendChild(this)
   })
-}
-
