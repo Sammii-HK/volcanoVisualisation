@@ -24,6 +24,7 @@ const locationJSONData = Papa.parse<{
   "Volcano Explosivity Index (VEI)": string,
   Latitude: string,
   Longitude: string,
+  Year: string,
 }>(volcanoEruptionsCsvData, {
   delimiter: ",",
   header: true
@@ -173,11 +174,11 @@ const Map: React.FC = () => {
 				<group>
 					{/* <PerspectiveCamera makeDefault position={[2, 0, 5]} /> */}
 					<PerspectiveCamera makeDefault position={[2, 0, 5]} />
-					{locationData.map((location) => {
+					{locationData.map((location, i) => {
 						return (
 							<Marker
-								key={location.Latitude + location.Longitude}
-								markerId={location.Latitude + location.Longitude}
+								key={i}
+								markerId={i}
 								radius={radius}
 								coord={{
 									lat: parseFloat(location.Latitude),

@@ -1,5 +1,6 @@
 import { useSpring, animated } from "@react-spring/three";
-import { Html, Sphere } from "@react-three/drei";
+// import { Html, Sphere } from "@react-three/drei";
+import { Sphere } from "@react-three/drei";
 // import classNames from "classnames";
 import { useState } from "react";
 // import { CrystalLocation } from "../../lib/types/location";
@@ -72,10 +73,12 @@ export function Marker({
 			// 	document.body.style.cursor = "default";
       //   onLocationHovered(false);
 			// }}
-      // onClick={() => {
-			// 	setIsHovered(true);
-      //   onLocationClicked?.(markerId);
-      // }}
+      onClick={() => {
+				setIsHovered(true);
+        console.log("markerId", markerId);
+        
+        // onLocationClicked?.(markerId);
+      }}
 			scale={springProps.scale}
 		>
 			<meshBasicMaterial />
