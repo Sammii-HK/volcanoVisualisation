@@ -1,6 +1,6 @@
 # Volcation Visualisation
 
-A full stack app, which plots volcano eruptions on a Orthographic projection map, using D3.js to visualise the data, running an Express server loading data stored as JSON.
+A front-end app, which plots CSV data of volcano eruptions on an interactive 3D globe, using D3.js to visualise the data
 
 ## Details
 
@@ -11,8 +11,9 @@ A full stack app, which plots volcano eruptions on a Orthographic projection map
 ### Technologies Used
 
 * [D3.js](https://d3js.org/)
-* Express
-* Javascript
+* Typescript
+* React
+* Vite
 
 ### App Overview
 
@@ -61,7 +62,7 @@ I extracted the data I needed from the CVS data set.
 
 As the circles are created, they are placed on the x & y Axis accordingly on the canvas. The circles radius is also determined by the 'VEI' or Volcano Explosivity Index.
 
-```js
+<!-- ```js
 // Create circles
     svg.selectAll(".data-circle")
        .data(nodes)
@@ -76,12 +77,11 @@ As the circles are created, they are placed on the x & y Axis accordingly on the
        .attr("r", function(d) {
        		return rScale(parseInt(d.vei))
        })
-```
+``` -->
 
 <!-- write about react three and drei and three fibre and canvas etc -->
 
 <img width="2560" alt="Screenshot 2024-12-30 at 17 28 31" src="https://github.com/user-attachments/assets/28d20ec9-2e28-4521-a591-be717a529f07" />
-
 
 #### Functionality
 
@@ -93,4 +93,5 @@ An achievement was to render the globe with a geoOrthographic projection so that
 
 ## Future enhancements
 
-* To implement spin momentum for a more natural feeling response when spinning the globe.
+* To add data filtering to explore the data in more depth
+* To add labels to plotted point, detailing the year and VEI of the eruption
