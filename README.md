@@ -80,6 +80,9 @@ As the circles are created, they are placed on the x & y Axis accordingly on the
 
 <!-- write about react three and drei and three fibre and canvas etc -->
 
+<img width="2560" alt="Screenshot 2024-12-30 at 17 28 31" src="https://github.com/user-attachments/assets/28d20ec9-2e28-4521-a591-be717a529f07" />
+
+
 #### Functionality
 
 To rotate the globe, use the cursor to drag and drop.
