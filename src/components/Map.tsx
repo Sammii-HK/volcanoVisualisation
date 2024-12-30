@@ -1,8 +1,10 @@
-import { Fragment, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+// import { Fragment, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useRef } from 'react';
 // import { CrystalLocation } from '../../lib/types/location';
 import { TextureLoader } from 'three';
 import { useFrame, useLoader } from '@react-three/fiber';
-import { animated, useSpring } from "@react-spring/three";
+// import { animated, useSpring } from "@react-spring/three";
+import { animated } from "@react-spring/three";
 import * as THREE from 'three'
 
 // import EarthNightMap from '../../public/assets/textures/8k_earth_daymap_low_saturation.jpg'
@@ -35,7 +37,7 @@ const locationData = locationJSONData.data;
 // console.log("locationData", locationData.data[0]);
 
 
-const AnimatedOrbitControls = animated(OrbitControls) as any;
+const AnimatedOrbitControls = animated(OrbitControls); // as any;
 
 // const Map: React.FC<
 //     {
@@ -98,7 +100,7 @@ const Map: React.FC = () => {
 			// }
 		// }, [locationData, props.activeLocationId]);
 
-		const [transitioningAway, setTransitioningAway] = useState(false);
+		// const [transitioningAway, setTransitioningAway] = useState(false);
 
 		// useLayoutEffect(() => {
 		// 	if (props.activeLocationId === undefined) {

@@ -31,6 +31,7 @@ interface MarkerProps {
 	markerId: number;
 	coord: { lat: number; lon: number };
 	radius: number;
+  locationLabel: unknown;
   // locationLabel: CrystalLocation;
   // hoveredLocationId: number;
 	// onLocationHovered: (locationId: number | false) => void;
@@ -41,7 +42,7 @@ export function Marker({
 	markerId,
 	coord,
 	radius,
-  // locationLabel,
+  locationLabel,
 	// onLocationHovered,
 	// onLocationClicked,
   // hoveredLocationId
@@ -57,6 +58,9 @@ export function Marker({
 		coord.lon,
 		radius
 	);
+
+  console.log("locationLabel", locationLabel);
+  
 
 	return (
 		<A.Sphere
